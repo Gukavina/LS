@@ -19,13 +19,22 @@ public class File_Manager {
 
 
     // Точка входа
+    // Точка входа
     public static void main( String[ ] args ) throws Exception {
-        int i;
-        String stringTmp; // Строка для временного хранения аргументов
+        // Вывести в консоль результат анализа
+        System.out.print(createInfoString(args ));
+    }
+
+    // Метод формирования информационной строки
+    public static String createInfoString(String[ ] args ) throws Exception {
+        // Локальные переменные
+        String stringInfo = "";
+        int i;						// Переменная цикла
+        String stringTmp;			// Строка для временного хранения аргументов
         numberFlagO = args.length;	// Начальное значение переменной numberFlagO
 
         // Анализ параметров командной строки
-        for( i = 0; i < args.length; i++) {
+        for( i = 0; i < args.length; i++)	{
             stringTmp = args[i];
             switch( stringTmp ) {
                 case "-l":
@@ -50,23 +59,27 @@ public class File_Manager {
 
         // Анализ файла/директории
         if(args.length - counterFlag > 0) {
-            fileAnalizName = args[args.length-1];// Определить имя файла/директории
-            readInfoFile();	// Считать информацию о файле/директории
+            fileAnalizName = args[args.length-1];	// Определить имя файла/директории
+            readInfoFile();												// Считать информацию о файле/директории
 
-            stringInfoFile();// Создание информационной строки
+            // Создание информационной строки
+            stringInfoFile();
 
             // Определяем имя файла для записи информации
-            if((numberFlagO < args.length-2)&&(args.length > 2)&&(args[numberFlagO+1].charAt(0) != '-'))
-                fileLogName = args[numberFlagO+1];
+            if( (numberFlagO < args.length-2)&&(args.length > 2)&&(args[numberFlagO+1].charAt(0) != '-') ) fileLogName = args[numberFlagO+1];
 
             // Создание файла с информацией
-            if (flagO)	writeLogFile();
+            if( flagO )	writeLogFile();
 
             // Вывод информации о файле/директории
-            System.out.print(fileInfo);
+            stringInfo = fileInfo;
 
-        } else System.out.print(fileHelp); // Вывести справочную информацию
+        } else stringInfo = fileHelp;		// Вывести справочную информацию
+
+        // Вернуть информационную строку
+        return stringInfo;
     }
+
 
     // Метод определение информации о файле.директории
     private static void readInfoFile() {
