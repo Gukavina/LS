@@ -1,3 +1,6 @@
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class fileAtribut {
     // Атрибуты файла
@@ -7,7 +10,7 @@ public class fileAtribut {
     public boolean flagWr;
     public String name;
     public long size;
-    public double sizeH;
+    public BigDecimal sizeH;
     public String sizeType;
     public String sizeTypeH;
     public long timeModif;
@@ -21,7 +24,7 @@ public class fileAtribut {
         this.flagWr		= false;
         this.name		= "";
         this.size		= 0;
-        this.sizeH		= 0;
+        this.sizeH		= new BigDecimal(0.0);
         this.sizeType	= " Байт ";
         this.timeModif	= 0;
         this.bitMaskB 	= "000";
@@ -64,20 +67,47 @@ public class fileAtribut {
 
     // Определение удобочитаемого размера
     private void sizeHum() {
-        if(size < 1024) {
-            sizeH = size;
-            sizeTypeH = " Байт ";
+        sizeH = new BigDecimal(size);
+        BigDecimal divisor = new BigDecimal(1024);
+
+        int i = 0;
+        while (sizeH.divide(divisor).compareTo(BigDecimal.ONE) > 0) {
+            sizeH = sizeH.divide(divisor);
+            i++;
         }
-        else if (size < 1024 * 1024) {
-            sizeH = size / 1024;
-            sizeTypeH		= " КБайт ";
-        } else if (size < 1024 * 1024 *1024) {
-            sizeH = size / 1024 / 1024;
-            sizeTypeH		= " МБайт ";
-        } else if (size < 1024 * 1024 * 1024 * 1024) {
-            sizeH = size / 1024 / 1024 / 1024;
-            sizeTypeH		= " КБайт ";
+
+        switch (i) {
+            case 0: sizeTypeH = "Байт";
+                break;
+            case 1: sizeTypeH = "КБайт";
+                break;
+            case 2: sizeTypeH = "МБайт";
+                break;
+            case 3: sizeTypeH = "Гбайт";
+                break;
+            case 4: sizeTypeH = "ТБайт";
+                break;
+            case 5: sizeTypeH = "Пбайт";
+                break;
+
+            default: sizeTypeH = "ЭБайт";
         }
+
+        sizeH = sizeH.round(new MathContext(4, RoundingMode.HALF_UP));
+        //if(size < 1024) {
+        //    sizeH = size;
+        //    sizeTypeH = " Байт ";
+        //}
+        //else if (size < 1024 * 1024) {
+        //    sizeH = size / 1024;
+        //    sizeTypeH		= " КБайт ";
+        //} else if (size < 1024 * 1024 *1024) {
+        //    sizeH = size / 1024 / 1024;
+        //    sizeTypeH		= " МБайт ";
+        //} else if (size < 1024 * 1024 * 1024 * 1024) {
+        //    sizeH = size / 1024 / 1024 / 1024;
+        //    sizeTypeH		= " КБайт ";
+        //}
     }
 
     // Вывод тестовой информации
