@@ -2,7 +2,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public class fileAtribut {
+public class FileAtribut {
     // Атрибуты файла
     public boolean flagDir;
     public boolean flagEx;
@@ -17,7 +17,7 @@ public class fileAtribut {
     public String bitMaskB;
     public String bitMaskH;
     // Базовый конструктор класса
-    fileAtribut() {
+    FileAtribut() {
         this.flagDir	= false;
         this.flagEx		= false;
         this.flagRd		= false;
@@ -31,7 +31,7 @@ public class fileAtribut {
         this.bitMaskH	= "---";
     }
 
-    fileAtribut( boolean flagDir, boolean flagEx, boolean flagRd, boolean flagWr, String name, long size,  long timeModif ) {
+    FileAtribut( boolean flagDir, boolean flagEx, boolean flagRd, boolean flagWr, String name, long size,  long timeModif ) {
         this.flagDir    = flagDir;
         this.flagEx	    = flagEx;
         this.flagRd	    = flagRd;

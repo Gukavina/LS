@@ -11,7 +11,7 @@ public class File_Manager {
     private static int  counterFlag = 0;
     private static int  numberFlagO;
     private static int  counterItem = 1;
-    private static fileAtribut[ ] fileAtributs = null;
+    private static FileAtribut[ ] fileAtributs = null;
     private static String  fileLogName = "fileInfo.txt";
     private static String  fileAnalizName = "fileAnaliz.txt";
     private static String  fileHelp = "java testApp [-l] [-h] [-r] [-0 [имя_файла_с_информацией]] имя_файла\\директории \n";
@@ -87,16 +87,16 @@ public class File_Manager {
 
         if(dir.exists()) {
             if(dir.isDirectory() ) counterItem = dir.listFiles().length;
-            fileAtributs = new fileAtribut[counterItem];
+            fileAtributs = new FileAtribut[counterItem];
             if(dir.isDirectory() ) {
                 File[ ] item =  dir.listFiles() ;
                 for(int i = 0; i < counterItem; i++ )
                     if( item[i].isDirectory())
-                        fileAtributs[i]	= new fileAtribut(true,  item[i].canExecute(), item[i].canRead(),
+                        fileAtributs[i]	= new FileAtribut(true,  item[i].canExecute(), item[i].canRead(),
                                 item[i].canWrite(), item[i].getName(), item[i].length(), item[i].lastModified());
-                    else fileAtributs[i] = new fileAtribut(false, item[i].canExecute(), item[i].canRead(),
+                    else fileAtributs[i] = new FileAtribut(false, item[i].canExecute(), item[i].canRead(),
                             item[i].canWrite(), item[i].getName(), item[i].length(), item[i].lastModified());
-            } else fileAtributs[0] = new fileAtribut(false, dir.canExecute(), dir.canRead(), dir.canWrite(),
+            } else fileAtributs[0] = new FileAtribut(false, dir.canExecute(), dir.canRead(), dir.canWrite(),
                     dir.getName(), dir.length(), dir.lastModified());
         }
     }
@@ -132,7 +132,7 @@ public class File_Manager {
 
     // Метод сортировки
     private static void bubbleSortDir( ) {
-        fileAtribut fileAtributsTmp = null;
+        FileAtribut fileAtributsTmp = null;
         boolean flagTmp;
         for(int i = counterItem-1 ;  i > 0 ;  i--)  {
             for(int j = 0 ; j < i ; j++) {
